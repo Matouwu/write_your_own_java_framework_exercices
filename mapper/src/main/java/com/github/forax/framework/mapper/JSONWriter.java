@@ -25,7 +25,7 @@ public final class JSONWriter {
                     .<JSONFuntion>map(propertyDescriptor -> {
                         var name = propertyDescriptor.getName();
                         var getter = propertyDescriptor.getReadMethod();
-                        var prefix = "\"" + name + "\"";
+                        var prefix = "\"" + name + "\": ";
                         return (JSONWriter writer, Object o) -> {
                             var value = Utils.invokeMethod(o,getter);
                             return prefix + writer.toJSON(value);
