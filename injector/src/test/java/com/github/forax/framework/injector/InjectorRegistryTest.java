@@ -24,93 +24,102 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 @SuppressWarnings("unused")
 public class InjectorRegistryTest {
-  /*
-  @Nested
-  public class Q1 {
-    @Test @Tag("Q1")
-    public void getRegistry() {
-      var registry = new InjectorRegistry();
-      assertNotNull(registry);
-    }
 
-    @Test @Tag("Q1")
-    public void atInjectTargetMethodAndConstructorAndRetentionIsRuntime() {
-      assertEquals(List.of(METHOD, CONSTRUCTOR), List.of(Inject.class.getAnnotation(Target.class).value()));
-    }
-
-    @Test @Tag("Q1")
-    public void registerInstanceAndGetInstanceString() {
-      var registry = new InjectorRegistry();
-      registry.registerInstance(String.class, "hello");
-      assertEquals("hello", registry.lookupInstance(String.class));
-    }
-
-    @Test @Tag("Q1")
-    public void registerInstanceAndGetInstanceInteger() {
-      var registry = new InjectorRegistry();
-      registry.registerInstance(Integer.class, 42);
-      assertEquals(42, registry.lookupInstance(Integer.class));
-    }
-
-    @Test @Tag("Q1")
-    public void registerInstanceAndGetInstanceSameInstance() {
-      record Person(String name) {}
-
-      var registry = new InjectorRegistry();
-      var bob = new Person("Bob");
-      registry.registerInstance(Person.class, bob);
-      assertSame(bob, registry.lookupInstance(Person.class));
-    }
-
-    @Test @Tag("Q1")
-    public void registerInstanceAndGetInstanceWithAnInterface() {
-      interface I {
-        String hello();
-      }
-      class Impl implements I {
-        @Override
-        public String hello() {
-          return "hello";
+    @Nested
+    public class Q1 {
+        @Test
+        @Tag("Q1")
+        public void getRegistry() {
+            var registry = new InjectorRegistry();
+            assertNotNull(registry);
         }
-      }
 
-      var registry = new InjectorRegistry();
-      var impl = new Impl();
-      registry.registerInstance(I.class, impl);
-      assertSame(impl, registry.lookupInstance(I.class));
+        @Test
+        @Tag("Q1")
+        public void atInjectTargetMethodAndConstructorAndRetentionIsRuntime() {
+            assertEquals(List.of(METHOD, CONSTRUCTOR), List.of(Inject.class.getAnnotation(Target.class).value()));
+        }
+
+        @Test
+        @Tag("Q1")
+        public void registerInstanceAndGetInstanceString() {
+            var registry = new InjectorRegistry();
+            registry.registerInstance(String.class, "hello");
+            assertEquals("hello", registry.lookupInstance(String.class));
+        }
+
+        @Test
+        @Tag("Q1")
+        public void registerInstanceAndGetInstanceInteger() {
+            var registry = new InjectorRegistry();
+            registry.registerInstance(Integer.class, 42);
+            assertEquals(42, registry.lookupInstance(Integer.class));
+        }
+
+        @Test
+        @Tag("Q1")
+        public void registerInstanceAndGetInstanceSameInstance() {
+            record Person(String name) {
+            }
+
+            var registry = new InjectorRegistry();
+            var bob = new Person("Bob");
+            registry.registerInstance(Person.class, bob);
+            assertSame(bob, registry.lookupInstance(Person.class));
+        }
+
+        @Test
+        @Tag("Q1")
+        public void registerInstanceAndGetInstanceWithAnInterface() {
+            interface I {
+                String hello();
+            }
+            class Impl implements I {
+                @Override
+                public String hello() {
+                    return "hello";
+                }
+            }
+
+            var registry = new InjectorRegistry();
+            var impl = new Impl();
+            registry.registerInstance(I.class, impl);
+            assertSame(impl, registry.lookupInstance(I.class));
+        }
+
+        @Test
+        @Tag("Q1")
+        public void registerInstancePreconditions() {
+            var registry = new InjectorRegistry();
+            assertAll(() -> assertThrows(NullPointerException.class, () -> registry.registerInstance(null, new Object())), () -> assertThrows(NullPointerException.class, () -> registry.registerInstance(Consumer.class, null)));
+        }
+
+        @Test
+        @Tag("Q1")
+        public void lookupInstancePreconditions() {
+            var registry = new InjectorRegistry();
+            assertThrows(NullPointerException.class, () -> registry.lookupInstance(null));
+        }
     }
 
-    @Test @Tag("Q1")
-    public void registerInstancePreconditions() {
-      var registry = new InjectorRegistry();
-      assertAll(
-          () -> assertThrows(NullPointerException.class, () -> registry.registerInstance(null, new Object())),
-          () -> assertThrows(NullPointerException.class, () -> registry.registerInstance(Consumer.class, null))
-      );
-    }
+    @Nested
+    public class Q2 {
+        @Test
+        @Tag("Q2")
+        public void registerInstanceAndGetInstancePreciseSignature() {
+            InjectorRegistry registry = new InjectorRegistry();
+            registry.registerInstance(String.class, "hello");
+            String instance = registry.lookupInstance(String.class);
+            assertEquals("hello", instance);
+        }
 
-    @Test @Tag("Q1")
-    public void lookupInstancePreconditions() {
-      var registry = new InjectorRegistry();
-      assertThrows(NullPointerException.class, () -> registry.lookupInstance(null));
+//        @Test
+//        @Tag("Q2")
+//        public void shouldNotCompilePreciseSignature() {
+//            var registry = new InjectorRegistry();
+//            registry.registerInstance(String.class, 3);
+//        }
     }
-  }
-
-  @Nested
-  public class Q2 {
-    @Test @Tag("Q2")
-    public void registerInstanceAndGetInstancePreciseSignature() {
-      InjectorRegistry registry = new InjectorRegistry();
-      registry.registerInstance(String.class, "hello");
-      String instance = registry.lookupInstance(String.class);
-      assertEquals("hello", instance);
-    }
-    //@Test @Tag("Q2")
-    //public void shouldNotCompilePreciseSignature() {
-    //  var registry = new InjectorRegistry();
-    //  registry.registerInstance(String.class, 3);
-    //}
-  }
 
 
   @Nested
@@ -371,7 +380,6 @@ public class InjectorRegistryTest {
     }
   }
 
-
   @Nested
   public class Q6 {
     @Test @Tag("Q6")
@@ -494,6 +502,7 @@ public class InjectorRegistryTest {
     }
   }
 
+
   @Nested
   public class Q7 {
     static class Service {
@@ -545,5 +554,4 @@ public class InjectorRegistryTest {
       assertThrows(NullPointerException.class, () -> registry.registerProviderClass(null));
     }
   }
-  */
 }
